@@ -4,12 +4,10 @@
 
 import pytest
 
-from typing import Dict, List
+from typing import List
 
 from fastapi.testclient import TestClient
 from paste.main import create_app
-from paste.models import Paste_Pydantic
-from httpx import AsyncClient
 
 
 @pytest.fixture
