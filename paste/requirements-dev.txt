@@ -4,7 +4,9 @@ mypy==0.812
 
 # Testing
 pytest==6.2.4
+pytest-cov==2.12.0
 requests==2.25.1
+httpx==0.18.1
 
 # WSGI server
 uvicorn[standard]==0.13.4

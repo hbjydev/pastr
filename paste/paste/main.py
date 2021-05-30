@@ -7,11 +7,18 @@ from fastapi import FastAPI
 from paste.settings import TORTOISE_ORM, version, description, PasteSettings
 from tortoise.contrib.fastapi import register_tortoise
 
-app = FastAPI(
-    description=description,
-    title=PasteSettings().name,
-    version=version,
-)
 
-register_routes(app)
-register_tortoise(app, TORTOISE_ORM)
+def create_app() -> FastAPI:
+    app = FastAPI(
+        description=description,
+        title=PasteSettings().name,
+        version=version,
+    )
+
+    register_routes(app)
+    register_tortoise(app, TORTOISE_ORM)
+
+    return app
+
+
+app = create_app()
