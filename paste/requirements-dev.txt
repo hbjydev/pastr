@@ -1,0 +1,10 @@
+# Code Quality Tooling
+flake8==3.9.2
+mypy==0.812
+
+# Testing
+pytest==6.2.4
+requests==2.25.1
+
+# WSGI server
+uvicorn[standard]==0.13.4
