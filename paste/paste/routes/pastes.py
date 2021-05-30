@@ -32,7 +32,7 @@ class SingleResponse(APIResponse):
 
 @router.get("/", response_model=ListIndex)
 async def list_pastes() -> APIResponse:
-    pastes = await Paste_Pydantic.from_queryset(Pastes.all())
+    pastes = await Paste_Pydantic.from_queryset(Pastes.filter(private=False))
     return APIResponse(**{"message": f"Found {len(pastes)} paste(s).", "data": pastes})
 
 

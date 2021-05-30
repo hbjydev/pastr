@@ -17,6 +17,7 @@ class Pastes(Model):
     id: int = fields.BigIntField(pk=True)
 
     content: str = fields.TextField()
+    private = fields.BooleanField(default=False)
 
     created_at: datetime = fields.DatetimeField(auto_now_add=True)
     updated_at: Optional[datetime] = fields.DatetimeField(auto_now=True)

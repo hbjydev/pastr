@@ -16,7 +16,6 @@ def client():
         yield tc
 
 
-# @pytest.mark.asyncio
 def test_list_pastes(client: TestClient):
     res = client.get("/pastes")
     assert res.status_code == 200
@@ -24,6 +23,22 @@ def test_list_pastes(client: TestClient):
     assert "data" in res.json()
     assert "error" in res.json()
     assert isinstance(res.json()['data'], List)
+
+
+def test_list_pastes_private(client: TestClient):
+    client.post("/pastes/", json={"content": "Hey there friends!", "private": True})
+    client.post("/pastes/", json={"content": "Hey there friends, not private!"})
+    res = client.get("/pastes")
+    print(res.json())
+    assert res.status_code == 200
+    assert "message" in res.json()
+    assert "data" in res.json()
+    assert "error" in res.json()
+    assert isinstance(res.json()['data'], List)
+
+    prv = list(filter(lambda p: not p['private'], res.json()['data']))
+
+    assert len(prv) == len(res.json()['data'])
 
 
 def test_create_paste(client: TestClient):
@@ -38,6 +53,20 @@ def test_create_paste(client: TestClient):
 
 def test_get_paste(client: TestClient):
     res = client.post("/pastes/", json={"content": "Hey there friends!"})
+    id = res.json()['data']
+
+    res = client.get(f"/pastes/{id}")
+    assert res.status_code == 200
+    assert "message" in res.json()
+    assert "data" in res.json()
+    assert res.json()['data']
+    assert "error" in res.json()
+    assert "content" in res.json()['data']
+    assert res.json()['data']['content'] == "Hey there friends!"
+
+
+def test_get_paste_private(client: TestClient):
+    res = client.post("/pastes/", json={"content": "Hey there friends!", "private": True})
     id = res.json()['data']
 
     res = client.get(f"/pastes/{id}")
