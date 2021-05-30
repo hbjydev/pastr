@@ -16,9 +16,9 @@ It uses [Redis](https://redis.io), [Minio](https://min.io), and
 
 ## Features
 
-- [ ] A POLR-compatible link shortening service
+- [ ] A simple link shortening service
 - [ ] A simple pastebin service
-- [ ] A Pomf-compatible file uploading service
+- [ ] A simple file uploading service
 
 
 ## Development
