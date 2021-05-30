@@ -70,6 +70,12 @@ def test_get_paste_raw(client: TestClient):
     assert res.headers['Content-Type'] == "text/plain; charset=utf-8"
 
 
+def test_get_paste_raw_bad_accept(client: TestClient):
+    res = client.get(f"/pastes/0/raw", headers={"accept": "application/json"})
+    assert res.status_code == 400
+    assert not res.json()['detail'] == 'You may only request text/plain MIME type from this endpoint.'
+
+
 def test_get_paste_raw_not_found(client: TestClient):
     res = client.get("/pastes/0")
     assert res.status_code == 404
