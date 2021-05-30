@@ -71,14 +71,12 @@ def test_get_paste_raw(client: TestClient):
 
 
 def test_get_paste_raw_bad_accept(client: TestClient):
-    res = client.get(f"/pastes/0/raw", headers={"accept": "application/json"})
+    res = client.get("/pastes/0/raw", headers={"accept": "application/json"})
     assert res.status_code == 400
     assert not res.json()['detail'] == 'You may only request text/plain MIME type from this endpoint.'
 
 
 def test_get_paste_raw_not_found(client: TestClient):
-    res = client.get("/pastes/0")
+    res = client.get("/pastes/0/raw", headers={"accept": "text/plain"})
     assert res.status_code == 404
-    assert res.json()['error'] == "paste_not_found"
-    assert res.json()['message'] == "No such paste found."
-    assert not res.json()['data']
+    assert res.content.decode("utf-8") == "PASTE_NOT_FOUND"

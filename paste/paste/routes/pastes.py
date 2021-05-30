@@ -78,7 +78,7 @@ async def get_paste(id: int, response: Response):
     response_class=PlainTextResponse,
     responses={404: {"model": APIResponse}}
 )
-async def get_paste_raw(id: int, request: Request, response: Response):
+async def get_paste_raw(id: int, request: Request):
     if request.headers['Accept'] != 'text/plain':
         raise HTTPException(
             400,
@@ -90,9 +90,4 @@ async def get_paste_raw(id: int, request: Request, response: Response):
         pastes.content = b64decode(pastes.content).decode('utf-8')
         return Response(pastes.content, status_code=200, media_type="text/plain")
     except DoesNotExist:
-        response.status_code = 404
-        return SingleResponse(**{
-            "message": "No such paste found.",
-            "data": None,
-            "error": "paste_not_found"
-        })
+        return Response("PASTE_NOT_FOUND", status_code=404, media_type="text/plain")
