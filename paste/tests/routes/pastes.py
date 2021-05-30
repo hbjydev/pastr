@@ -50,6 +50,14 @@ def test_get_paste(client: TestClient):
     assert res.json()['data']['content'] == "Hey there friends!"
 
 
+def test_get_paste_not_found(client: TestClient):
+    res = client.get("/pastes/0")
+    assert res.status_code == 404
+    assert res.json()['error'] == "paste_not_found"
+    assert res.json()['message'] == "No such paste found."
+    assert not res.json()['data']
+
+
 def test_get_paste_raw(client: TestClient):
     res = client.post("/pastes/", json={"content": "Hey there friends!"})
     id = res.json()['data']
@@ -60,3 +68,11 @@ def test_get_paste_raw(client: TestClient):
     assert res.content.decode('utf-8')
     assert res.content.decode('utf-8') == "Hey there friends!"
     assert res.headers['Content-Type'] == "text/plain; charset=utf-8"
+
+
+def test_get_paste_raw_not_found(client: TestClient):
+    res = client.get("/pastes/0")
+    assert res.status_code == 404
+    assert res.json()['error'] == "paste_not_found"
+    assert res.json()['message'] == "No such paste found."
+    assert not res.json()['data']
