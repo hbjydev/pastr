@@ -7,6 +7,16 @@ networks:
     svc_net: {}
 
 services:
+    paste:
+        build:
+            context: ./paste
+            dockerfile: Dockerfile
+        environment:
+            database_uri: 'postgres://pastr:pastr@db/pastr'
+        networks:
+            - dat_net
+            - svc_net
+
     db:
         image: postgres:13.3
         environment:

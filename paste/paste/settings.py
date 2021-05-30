@@ -15,6 +15,7 @@ class PasteSettings(BaseSettings):
     debug: bool = True
     name: str = "Pastr Paste"
     database_uri: str = "postgres://paste:paste@localhost:5432/paste"
+    redis_uri: str = "redis://localhost"
 
 
 settings = PasteSettings()

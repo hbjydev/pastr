@@ -11,13 +11,14 @@ ENV PYTHONUNBUFFERED 1
 
 # Install system dependencies
 RUN apt-get update && \
-    apt-get install -y netcat gcc \
+    apt-get install -y netcat gcc && \
     apt-get clean
 
 # Install Python dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
+RUN pip install 'uvicorn[standard]==0.13.4'
 
 # Install start script
 COPY --chmod=0755 ./support/start.sh /usr/local/bin/start
