@@ -2,7 +2,6 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
-# from base64 import b64encode
 # from datetime import datetime
 from base64 import b64encode, b64decode
 from typing import List, Optional
